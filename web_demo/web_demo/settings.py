@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'web_demo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
+        "USER": "root",
+        "PASSWORD": "mysql",
+        'NAME': "web_db",
     }
 }
 
@@ -115,3 +119,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django框架的缓存存储配置，默认是服务器内存，这里是redis作为缓存配置
+CACHES = {
+    # 缓存空间
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# 将session数据存储到缓存中
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# 将session数据存储到CACHES缓存的default空间中
+SESSION_CACHE_ALIAS = "default"
