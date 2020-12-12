@@ -96,25 +96,32 @@ def user_info(request, id):
         return JsonResponse(res_data)
 
 
+def is_login(request):
+    """封装一个函数判断用户是否登录"""
+    username = request.session.get("username")
+    if username:
+        # (2)如果username在session中存在，则用户已登录
+        return HttpResponse("{0}用户已登录".format(username))
+
+
 class LoginView(View):
     """登录类视图"""
 
     def get(self, request):
         # 1、获取登录页面
         # (2)判断是否登录
-        username = request.session.get("username")
-        if username:
-            # (2)如果username在session中存在，则用户已登录
-            return HttpResponse("{0}用户已登录".format(username))
+        response = is_login(request)
+        if response:
+            return response
+
         return render(request, "login.html")
 
     def post(self, request):
         # 2、登录业务逻辑
         # (2)判断是否登录
-        username = request.session.get("username")
-        if username:
-            # (2)如果username在session中存在，则用户已登录
-            return HttpResponse("{0}用户已登录".format(username))
+        response = is_login(request)
+        if response:
+            return response
 
         # 2.如果是登录业务逻辑(POST)
         # 2.1 获取username和password
