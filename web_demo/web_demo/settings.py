@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # 注册自己的子应用，注册格式："子应用名.apps.子应用配置类"
     "helloworld.apps.HelloworldConfig",
     "users.apps.UsersConfig",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
