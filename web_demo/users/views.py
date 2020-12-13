@@ -110,10 +110,21 @@ def is_login(view_func):
     return wrapper
 
 
-class LoginView(View):
+class IsLoginMixin(object):
+    # 封装Mixin扩展类，定义as_view方法实现是否已登录的判断，最后LoginView组合继承这个类。
+    @classmethod
+    def as_view(cls, **initkwargs):
+        """判断用户是否登录"""
+        # 这里调用的是View类中的as_view方法
+        view_func = super().as_view(**initkwargs)
+        # 这里手动调用is_login装饰器函数
+        return is_login(view_func)
+
+
+class LoginView(IsLoginMixin, View):
     """登录类视图"""
 
-    @method_decorator(is_login)
+    # @method_decorator(is_login)
     def get(self, request):
         # 1、获取登录页面
         # (2)判断是否登录
@@ -123,7 +134,7 @@ class LoginView(View):
 
         return render(request, "login.html")
 
-    @method_decorator(is_login)
+    # @method_decorator(is_login)
     def post(self, request):
         # 2、登录业务逻辑
         # (2)判断是否登录
