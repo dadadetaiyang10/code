@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views import View
 
 from users.models import User
@@ -96,32 +97,39 @@ def user_info(request, id):
         return JsonResponse(res_data)
 
 
-def is_login(request):
-    """封装一个函数判断用户是否登录"""
-    username = request.session.get("username")
-    if username:
-        # (2)如果username在session中存在，则用户已登录
-        return HttpResponse("{0}用户已登录".format(username))
+def is_login(view_func):
+    """封装一个装饰器函数判断用户是否登录"""
+
+    def wrapper(request):
+        username = request.session.get("username")
+        if username:
+            # (2)如果username在session中存在，则用户已登录
+            return HttpResponse("{0}用户已登录".format(username))
+        return view_func(request)
+
+    return wrapper
 
 
 class LoginView(View):
     """登录类视图"""
 
+    @method_decorator(is_login)
     def get(self, request):
         # 1、获取登录页面
         # (2)判断是否登录
-        response = is_login(request)
-        if response:
-            return response
+        # response = is_login(request)
+        # if response:
+        #     return response
 
         return render(request, "login.html")
 
+    @method_decorator(is_login)
     def post(self, request):
         # 2、登录业务逻辑
         # (2)判断是否登录
-        response = is_login(request)
-        if response:
-            return response
+        # response = is_login(request)
+        # if response:
+        #     return response
 
         # 2.如果是登录业务逻辑(POST)
         # 2.1 获取username和password
