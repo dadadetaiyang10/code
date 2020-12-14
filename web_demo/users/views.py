@@ -148,8 +148,8 @@ class LoginView(IsLoginMixin, View):
         password = request.POST.get("password")
         remember = request.POST.get("remember")
         # 2.2 对用户名和密码进行校验
-        try:
-            # 2.2.1 get方法默认利用查到的数据创建一个对应的模型类对象，并将这个模型对象返回
+        try:get方法默认利用查到的数据创建一个对应的模型类对象，并将这个模型对象返回
+            # 2.2.1
             user = User.objects.get(username=username, password=password)
         except User.DoesNotExist:
             # 2.2.3 查询失败，会出现"模型类.DoseNotExist"异常
