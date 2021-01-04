@@ -68,3 +68,9 @@ class HeroInfomation(View):
                 return JsonResponse(data)
         else:
             return JsonResponse({"code": 1, "message": "传入参数不能为空"})
+
+    def put(self, request):
+        pass
+
+    def delete(self, request):
+        pass
