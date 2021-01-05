@@ -12,8 +12,8 @@ django.setup()
 
 from rest_framework import serializers
 
-from booktest.models import BookInfo
-from booktest.serializers import BookInfoSerializer
+from booktest.models import BookInfo, HeroInfo
+from booktest.serializers import BookInfoSerializer, HeroInfoSerializer
 
 
 class User(object):
@@ -31,6 +31,20 @@ class UserSerializer(serializers.Serializer):
     # age = serializers.IntegerField(write_only=True) # 作用于反序列化
     age = serializers.IntegerField(required=False, default=60)  # 默认required为True
     addr = serializers.CharField(default="上海浦东新区")
+
+
+class Goods(object):
+    def __init__(self, name, price, stock):
+        self.name = name
+        self.price = price
+        self.stock = stock
+
+
+class GoodsSerializer(serializers.Serializer):
+    """商品序列化器类"""
+    name = serializers.CharField(label="名称", max_length=40)
+    price = serializers.IntegerField(label="价格", max_value=10000, required=False)
+    stock = serializers.IntegerField(label="库存", max_value=99999, required=False)
 
 
 if __name__ == '__main__':
@@ -70,13 +84,36 @@ if __name__ == '__main__':
     # res = json.dumps(res, indent=1, ensure_ascii=False)
     # print(res)
 
-    # 4.1 查询并获取所有图书数据
-    book = BookInfo.objects.all()
+    # # 4.1 查询并获取所有图书数据
+    # book = BookInfo.objects.all()
+    #
+    # # 4.2 创建序列化器对象
+    # serializer = BookInfoSerializer(instance=book, many=True)
+    #
+    # # 4.3 进行序列化，获取序列化之后的数据
+    # res = serializer.data
+    # res = json.dumps(res, indent=1, ensure_ascii=False)
+    # print(res)
 
-    # 4.2 创建序列化器对象
-    serializer = BookInfoSerializer(instance=book, many=True)
+    # 2021.1.4作业1：序列化
+    # goods = Goods(name="华为", price=4900, stock=1000)
+    # serializer = GoodsSerializer(instance=goods)
+    # res = serializer.data
+    # res = json.dumps(res, indent=1, ensure_ascii=False)
+    # print(res)
 
-    # 4.3 进行序列化，获取序列化之后的数据
+    # 2021.1.4作业2：反序列化
+    # req_data = {'name': '小米10', 'price': 4300}
+    # serializer = GoodsSerializer(data=req_data)
+    # res = serializer.is_valid()
+    # if res:
+    #     print("校验通过：", serializer.validated_data)
+    # else:
+    #     print("校验失败：", serializer.errors)
+
+    # 5.英雄序列化器类
+    hero = HeroInfo.objects.get(id=6)
+    serializer = HeroInfoSerializer(instance=hero)
     res = serializer.data
     res = json.dumps(res, indent=1, ensure_ascii=False)
     print(res)
