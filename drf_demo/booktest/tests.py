@@ -111,9 +111,16 @@ if __name__ == '__main__':
     # else:
     #     print("校验失败：", serializer.errors)
 
-    # 5.英雄序列化器类
-    hero = HeroInfo.objects.get(id=6)
-    serializer = HeroInfoSerializer(instance=hero)
+    # 5.嵌套序列化：序列化id为27的英雄数据
+    # hero = HeroInfo.objects.get(id=27)
+    # serializer = HeroInfoSerializer(instance=hero)
+    # res = serializer.data
+    # res = json.dumps(res, indent=1, ensure_ascii=False)
+    # print(res)
+
+    # 6.嵌套序列化：序列化id为3的书数据
+    book = BookInfo.objects.get(id=3)
+    serializer = BookInfoSerializer(book)
     res = serializer.data
     res = json.dumps(res, indent=1, ensure_ascii=False)
     print(res)
