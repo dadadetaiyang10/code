@@ -8,8 +8,7 @@ class BookInfoSerializer(serializers.Serializer):
     bpub_date = serializers.DateField(label="发布日期")
     bread = serializers.IntegerField(label="阅读量", required=False)
     bcomment = serializers.IntegerField(label="评论量", required=False)
-
-    # 关联对象嵌套序列化字段
+    # 添加 heroinfo_set 字段
     # 嵌套序列化方式1：PrimaryKeyRelatedField - 将关联对象序列化为关联对象的主键
     # heroinfo_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     # 嵌套序列化方式2：将关联对象使用指定的序列化器进行嵌套序列化
@@ -25,7 +24,7 @@ class HeroInfoSerializer(serializers.Serializer):
         (1, '女')
     )
     id = serializers.IntegerField(label='ID', read_only=True)
-    hname = serializers.CharField(label='名字', max_length=20)
+    hname = serializers.CharField(label='名字', max_length=20, write_only=True)
     # choices选项参数：和校验有关，用来限定 hgender 的取值范围
     hgender = serializers.ChoiceField(label='性别', choices=GENDER_CHOICES, required=False)
     hcomment = serializers.CharField(label='描述信息', max_length=200, required=False)

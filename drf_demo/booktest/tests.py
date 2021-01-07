@@ -57,7 +57,7 @@ if __name__ == '__main__':
     # # 1.3 序列化：进行序列化操作，使用data方法获取序列化后的数据
     # res = serializer.data
     # print(res)
-
+    # --------------------------------------------------------------
     # # 2.1 反序列化：准备数据
     # req_data = {"name": "laowang"}
     #
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     #     print("校验通过：", serializer.validated_data)
     # else:
     #     print("校验失败：", serializer.errors)
-
+    # --------------------------------------------------------------
     # # 3.1 序列化单个对象：查询并获取id为1的图书对象
     # book = BookInfo.objects.get(id=1)
     #
@@ -83,18 +83,18 @@ if __name__ == '__main__':
     # res = serializer.data
     # res = json.dumps(res, indent=1, ensure_ascii=False)
     # print(res)
-
+    # --------------------------------------------------------------
     # # 4.1 查询并获取所有图书数据
-    # book = BookInfo.objects.all()
+    # books = BookInfo.objects.all()
     #
     # # 4.2 创建序列化器对象
-    # serializer = BookInfoSerializer(instance=book, many=True)
+    # serializer = BookInfoSerializer(instance=books, many=True)
     #
     # # 4.3 进行序列化，获取序列化之后的数据
     # res = serializer.data
     # res = json.dumps(res, indent=1, ensure_ascii=False)
     # print(res)
-
+    # --------------------------------------------------------------
     # 2021.1.4作业1：序列化
     # goods = Goods(name="华为", price=4900, stock=1000)
     # serializer = GoodsSerializer(instance=goods)
@@ -110,15 +110,15 @@ if __name__ == '__main__':
     #     print("校验通过：", serializer.validated_data)
     # else:
     #     print("校验失败：", serializer.errors)
-
-    # 5.嵌套序列化：序列化id为27的英雄数据
+    # --------------------------------------------------------------
+    # 5.嵌套序列化：序列化id为27的令狐冲英雄数据
     # hero = HeroInfo.objects.get(id=27)
     # serializer = HeroInfoSerializer(instance=hero)
     # res = serializer.data
     # res = json.dumps(res, indent=1, ensure_ascii=False)
     # print(res)
-
-    # 6.嵌套序列化：序列化id为3的书数据
+    # --------------------------------------------------------------
+    # 6.嵌套序列化：序列化id为3的图书数据
     book = BookInfo.objects.get(id=3)
     serializer = BookInfoSerializer(book)
     res = serializer.data

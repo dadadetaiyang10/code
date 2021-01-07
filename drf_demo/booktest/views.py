@@ -1,13 +1,15 @@
 import json
 
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from django.views import View
-
-# API: GET /books/
-# API: POST /books/
+from rest_framework.response import Response
+from booktest.serializers import BookInfoSerializer
+from rest_framework.viewsets import ViewSet
 from booktest.models import BookInfo
 
 
+# API: GET /books/
+# API: POST /books/
 class BookListView(View):
     """定义图书列表视图"""
 
@@ -118,3 +120,25 @@ class BookDetailView(View):
 
         # 3.返回响应
         return HttpResponse(status=204)
+
+
+# GET /books/
+# GET /books/(?P<pk>\d+)/
+class BookInfoViewSet(ViewSet):
+    """视图集的基本使用"""
+
+    # 1.获取所有图书数据
+    def list(self, request):
+        books = BookInfo.objects.all()
+        serializer = BookInfoSerializer(books, many=True)
+        return Response(serializer.data)
+
+    # 2.获取指定图书数据
+    def retrieve(self, request, pk):
+        try:
+            book = BookInfo.objects.get(pk=pk)
+        except BookInfo.DoesNotExist:
+            raise Http404
+
+        serializer = BookInfoSerializer(book)
+        return Response(serializer.data)
