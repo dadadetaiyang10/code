@@ -129,13 +129,13 @@ class BookDetailView(View):
 # class BookInfoViewSet(ViewSet):
 #     """视图集的基本使用"""
 #
-#     # 1.获取所有图书数据
+#     # (1)获取所有图书数据
 #     def list(self, request):
 #         books = BookInfo.objects.all()
 #         serializer = BookInfoSerializer(books, many=True)
 #         return Response(serializer.data)
 #
-#     # 2.获取指定图书数据
+#     # (2)获取指定图书数据
 #     def retrieve(self, request, pk):
 #         try:
 #             book = BookInfo.objects.get(pk=pk)
@@ -173,6 +173,8 @@ class BookDetailView(View):
 class BookInfoViewSet(ModelViewSet):
     queryset = BookInfo.objects.all()
     serializer_class = BookInfoSerializer
+    # 指定路由 Router 生成 URL 配置项时，从路径中提取参数的正则表达式
+    lookup_value_regex = '\d+'
 
     # API：GET /books/latest/
     def latest(self, request):
