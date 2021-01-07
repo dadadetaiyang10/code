@@ -9,4 +9,10 @@ urlpatterns = [
     re_path(r"^books/(?P<pk>\d+)/$", views.BookInfoViewSet.as_view(
         {"get": "retrieve", "put": "update", "delete": "destroy"}
     )),
+    re_path(r"^books/$", views.BookInfoViewSet.as_view(
+        {"get": "latest"}
+    )),
+    re_path(r"^books/$", views.BookInfoViewSet.as_view(
+        {"put": "read"}
+    )),
 ]

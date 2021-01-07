@@ -160,11 +160,26 @@ class BookDetailView(View):
 #     serializer_class = BookInfoSerializer
 
 # 4.ModelViewSet
+# class BookInfoViewSet(ModelViewSet):
+#     queryset = BookInfo.objects.all()
+#     serializer_class = BookInfoSerializer
+#     # GET /books/ -> list
+#     # POST /books/ -> create
+#     # GET /books/(?P<pk>\d+)/ -> retrieve
+#     # PUT /books/(?P<pk>\d+)/ -> update
+#     # DELETE /books/(?P<pk>\d+)/ -> destroy
+
+# 5.视图集中添加额外的 API(即：action处理方法)
 class BookInfoViewSet(ModelViewSet):
     queryset = BookInfo.objects.all()
     serializer_class = BookInfoSerializer
-    # GET /books/ -> list
-    # POST /books/ -> create
-    # GET /books/(?P<pk>\d+)/ -> retrieve
-    # PUT /books/(?P<pk>\d+)/ -> update
-    # DELETE /books/(?P<pk>\d+)/ -> destroy
+
+    # API：GET /books/latest/
+    def latest(self, request):
+        """获取 ID 最新的一本图书的数据"""
+        return Response({"message": "获取id最新的图书数据"})
+
+    # API: PUT /books/(?P<pk>\d+)/read/
+    def read(self, request, pk):
+        """修改指定图书的阅读量(只修改阅读量)"""
+        return Response({"message": "修改指定图书的阅读量"})
