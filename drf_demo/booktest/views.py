@@ -2,6 +2,7 @@ import json
 
 from django.http import JsonResponse, HttpResponse, Http404
 from django.views import View
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from booktest.serializers import BookInfoSerializer
 from rest_framework.viewsets import ViewSet, GenericViewSet, ReadOnlyModelViewSet, ModelViewSet
@@ -177,11 +178,13 @@ class BookInfoViewSet(ModelViewSet):
     lookup_value_regex = '\d+'
 
     # API：GET /books/latest/
+    @action(methods=["get"], detail=False)
     def latest(self, request):
         """获取 ID 最新的一本图书的数据"""
         return Response({"message": "获取id最新的图书数据"})
 
     # API: PUT /books/(?P<pk>\d+)/read/
+    @action(methods=["put"], detail=True)
     def read(self, request, pk):
         """修改指定图书的阅读量(只修改阅读量)"""
         return Response({"message": "修改指定图书的阅读量"})
