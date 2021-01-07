@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponse, Http404
 from django.views import View
 from rest_framework.response import Response
 from booktest.serializers import BookInfoSerializer
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ViewSet, GenericViewSet, ReadOnlyModelViewSet, ModelViewSet
 from booktest.models import BookInfo
 
 
@@ -122,6 +122,7 @@ class BookDetailView(View):
         return HttpResponse(status=204)
 
 
+# 1.ViewSet
 # GET /books/
 # GET /books/(?P<pk>\d+)/
 class BookInfoViewSet(ViewSet):
@@ -142,3 +143,19 @@ class BookInfoViewSet(ViewSet):
 
         serializer = BookInfoSerializer(book)
         return Response(serializer.data)
+
+
+# 2.GenericViewSet
+class BookInfoViewSet(GenericViewSet):
+    queryset = BookInfo.objects.all()
+    serializer_class = BookInfoSerializer
+
+
+# 3.ReadOnlyModelViewSet
+class BookInfoViewSet(ReadOnlyModelViewSet):
+    pass
+
+
+# 4.ModelViewSet
+class BookInfoViewSet(ModelViewSet):
+    pass

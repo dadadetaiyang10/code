@@ -11,7 +11,6 @@ import django
 django.setup()
 
 from rest_framework import serializers
-
 from booktest.models import BookInfo, HeroInfo
 from booktest.serializers import BookInfoSerializer, HeroInfoSerializer
 
