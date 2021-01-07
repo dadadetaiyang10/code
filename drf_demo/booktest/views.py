@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from booktest.serializers import BookInfoSerializer
 from rest_framework.viewsets import ViewSet, GenericViewSet, ReadOnlyModelViewSet, ModelViewSet
 from booktest.models import BookInfo
+from rest_framework.viewsets import mixins
 
 
 # API: GET /books/
@@ -125,37 +126,45 @@ class BookDetailView(View):
 # 1.ViewSet
 # GET /books/
 # GET /books/(?P<pk>\d+)/
-class BookInfoViewSet(ViewSet):
-    """视图集的基本使用"""
-
-    # 1.获取所有图书数据
-    def list(self, request):
-        books = BookInfo.objects.all()
-        serializer = BookInfoSerializer(books, many=True)
-        return Response(serializer.data)
-
-    # 2.获取指定图书数据
-    def retrieve(self, request, pk):
-        try:
-            book = BookInfo.objects.get(pk=pk)
-        except BookInfo.DoesNotExist:
-            raise Http404
-
-        serializer = BookInfoSerializer(book)
-        return Response(serializer.data)
+# class BookInfoViewSet(ViewSet):
+#     """视图集的基本使用"""
+#
+#     # 1.获取所有图书数据
+#     def list(self, request):
+#         books = BookInfo.objects.all()
+#         serializer = BookInfoSerializer(books, many=True)
+#         return Response(serializer.data)
+#
+#     # 2.获取指定图书数据
+#     def retrieve(self, request, pk):
+#         try:
+#             book = BookInfo.objects.get(pk=pk)
+#         except BookInfo.DoesNotExist:
+#             raise Http404
+#
+#         serializer = BookInfoSerializer(book)
+#         return Response(serializer.data)
 
 
 # 2.GenericViewSet
-class BookInfoViewSet(GenericViewSet):
-    queryset = BookInfo.objects.all()
-    serializer_class = BookInfoSerializer
+# class BookInfoViewSet(mixins.ListModelMixin,
+#                       mixins.RetrieveModelMixin,
+#                       GenericViewSet):
+#     queryset = BookInfo.objects.all()
+#     serializer_class = BookInfoSerializer
 
 
 # 3.ReadOnlyModelViewSet
-class BookInfoViewSet(ReadOnlyModelViewSet):
-    pass
-
+# class BookInfoViewSet(ReadOnlyModelViewSet):
+#     queryset = BookInfo.objects.all()
+#     serializer_class = BookInfoSerializer
 
 # 4.ModelViewSet
 class BookInfoViewSet(ModelViewSet):
-    pass
+    queryset = BookInfo.objects.all()
+    serializer_class = BookInfoSerializer
+    # GET /books/ -> list
+    # POST /books/ -> create
+    # GET /books/(?P<pk>\d+)/ -> retrieve
+    # PUT /books/(?P<pk>\d+)/ -> update
+    # DELETE /books/(?P<pk>\d+)/ -> destroy
