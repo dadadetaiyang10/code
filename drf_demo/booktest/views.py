@@ -2,6 +2,7 @@ import json
 
 from django.http import JsonResponse, HttpResponse, Http404
 from django.views import View
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from booktest.serializers import BookInfoSerializer
@@ -176,6 +177,8 @@ class BookInfoViewSet(ModelViewSet):
     serializer_class = BookInfoSerializer
     # 指定路由 Router 生成 URL 配置项时，从路径中提取参数的正则表达式
     lookup_value_regex = '\d+'
+    # 指定当前视图自己的认证方案，不再使用全局认证方案
+    authentication_classes = [SessionAuthentication]
 
     # API：GET /books/latest/
     @action(methods=["get"], detail=False)

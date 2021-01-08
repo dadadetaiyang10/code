@@ -119,3 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 此处设置DRF框架全局认证方式仅使用session认证方式
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}

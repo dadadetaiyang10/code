@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue基础回顾</title>
+    <!-- ① 在页面上引入 src 目录下的 vue.js 文件 -->
+    <script src="./src/vue.js"></script>
+</head>
+
+<body>
+<!-- ② 在当前 html 页面上创建一块 div 区域 -->
+<div id="app">
+    <!-- 使用 Vue对象中的 content 数据 -->
+    {{ content }}
+    <!--    添加按钮，使其点击时调用change_name方法-->
+    <input type="button" @click="change_name" value="更改欢迎词">
+</div>
+</body>
+
+<script>
+    // ③ 创建一个 Vue 对象，并进行设置
+    var vm = new Vue({
+        // el 属性用于指定当前 Vue 对象去控制页面上 #app 对应的 div 区域
+        el: "#app",
+        // 在data属性中可以定义数据，data中的数据可以在el控制的区域中进行使用
+        data: {
+            // 此处定义了一个名为：content，值为：'hello vue!' 的数据
+            content: "hello vue!"
+        },
+        methods: {
+            // 定义change_name方法
+            change_name: function () {
+                this.content = "hello smartli";
+            }
+        }
+
+    })
+</script>
+
+</html>
